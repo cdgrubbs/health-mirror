@@ -1,0 +1,4 @@
+env/
+build/
+dist/
+mirror.egg-info/
