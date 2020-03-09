@@ -13,14 +13,15 @@ class App(QMainWindow):
         # Changes background to black
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(self.backgroundRole(), Qt.red)
+        palette.setColor(self.backgroundRole(), Qt.black)
         self.setPalette(palette)
 
         layout = QGridLayout()
-        layout.addWidget(Clock(self), 0, 0)
+        clock_widget = Clock(self)
+        layout.addWidget(clock_widget, 0, 0)
+        clock_widget.show()
         self.setLayout(layout)
-
-        self.showFullScreen()
+        self.show()#FullScreen()
 
 def main():
     app = QApplication(sys.argv)
