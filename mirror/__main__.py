@@ -1,7 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout
-from PyQt5.QtGui import QPainter, QColor, QPen
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from mirror.widgets.clock import Clock
 
 class App(QMainWindow):
@@ -20,8 +19,9 @@ class App(QMainWindow):
         clock_widget = Clock(self)
         layout.addWidget(clock_widget, 0, 0)
         clock_widget.show()
+
         self.setLayout(layout)
-        self.show()#FullScreen()
+        self.showFullScreen()
 
 def main():
     app = QApplication(sys.argv)
