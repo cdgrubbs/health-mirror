@@ -32,9 +32,6 @@ stream.stop_stream()
 stream.close()
 p.terminate()
 
-print("Data: ")
-print(data)
-
 wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
 wf.setnchannels(CHANNELS)
 wf.setsampwidth(p.get_sample_size(FORMAT))
