@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from pprint import pprint
-from process import joke
-from utterances import TELL_JOKE
+from process import *
+from utterances import *
 
 import speech_recognition as sr
 
@@ -35,3 +35,23 @@ wordString = r.recognize_google(audio)
 for utterance in TELL_JOKE:
     if utterance.lower() == wordString.lower():
         joke()
+
+for utterance in BREATHING:
+    if utterance.lower() == wordString.lower():
+        breathe()
+
+for utterance in MEDICATION:
+    if utterance.lower() == wordString.lower():
+        medication()
+
+for utterance in LIGHTS_ON:
+    if utterance.lower() == wordString.lower():
+        light_on()
+
+for utterance in LIGHTS_OFF:
+    if utterance.lower() == wordString.lower():
+        light_off()
+
+for utterance in TALK:
+    if utterance.lower() == wordString.lower():
+        talk()
