@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from pprint import pprint
+from journal import journal
 from process import *
 from utterances import *
 
@@ -55,3 +56,7 @@ for utterance in LIGHTS_OFF:
 for utterance in TALK:
     if utterance.lower() == wordString.lower():
         talk()
+
+for utterance in JOURNAL:
+    if utterance.lower() == wordString.lower():
+        journal()

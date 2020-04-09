@@ -34,3 +34,13 @@ TALK = [
     "i need to talk to somebody",
     "talk to me"
 ]
+
+JOURNAL = [
+    "gratitude",
+    "journal",
+    "gratitude journal",
+    "add to gratitude journal"
+    "i want to do some journaling",
+    "i'd like to add to my gratitude journal",
+    "i want to add to my gratitude journal"
+]
