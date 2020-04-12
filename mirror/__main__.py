@@ -2,6 +2,8 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout
 from PyQt5.QtCore import Qt, QTimer
 from mirror.widgets.clock import Clock
+from mirror.widgets.weather.weather import WeatherGUI
+
 
 class App(QMainWindow):
     def __init__(self):
@@ -19,6 +21,10 @@ class App(QMainWindow):
         clock_widget = Clock(self)
         layout.addWidget(clock_widget, 0, 0)
         clock_widget.show()
+
+        weather_widget = WeatherGUI(self)
+        layout.addWidget(weather_widget, 0, 1)
+        weather_widget.show()
 
         self.setLayout(layout)
         self.showFullScreen()

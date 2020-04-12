@@ -2,10 +2,10 @@ import sys
 import requests
 import json
 import urllib.parse
+import pycountry
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
-from PyQt5.QtGui import QPainter, QColor, QPen, QPalette
-from PyQt5.QtCore import Qt, QRect, QTimer
+from PyQt5.QtGui import QPixmap, QIcon
 
 
 class WeatherData():
@@ -53,21 +53,18 @@ class WeatherResponse():
         return WeatherData(weather_dict)
         
 
-
 class WeatherRequestBuilder():
     OPEN_WEATHER_API_KEY = ''
-    request_str = 'https://api.openweathermap.org/data/2.5/weather?q='
+    request_str = 'https://api.openweathermap.org/data/2.5/weather?'
 
 
     def __init__(self, api_key='455a8cae3fea29e7e2e61e3dcdee84e3'):
         self.OPEN_WEATHER_API_KEY = api_key
 
 
-    def set_location(self,city='Chicago', state='Illinois', country_code=1):
+    def set_location(self,zip_code = 48104, country_code = 'us'):
         # Encode into UTF-8 (UTF-8 is the default option)
-        city = urllib.parse.quote(city)
-        state = urllib.parse.quote(state)
-        self.request_str +=  (city + ',' + state + ',' + str(country_code))
+        self.request_str +=  ('zip=' + str(zip_code) + ',' + str(country_code))
         return self
 
 
@@ -79,42 +76,62 @@ class WeatherRequestBuilder():
     def get(self):
         # Add the API key to the request
         self.request_str += '&appid=' + self.OPEN_WEATHER_API_KEY
+        print('sending the request: ' + self.request_str)
         return WeatherResponse(requests.get(self.request_str))
 
 
 class Weather():
-    city = 'Ann Arbor'
-    state = 'Michigan'
-    country_code = 1 # US
+    zip_code = 60607
+    country_code = 'us' # US
+
+    weather_data = None
 
     # https://openweathermap.org/
-    # Ex uri: api.openweathermap.org/data/2.5/weather?q=Chelsea,Michigan,1&units=imperial&appid=455a8cae3fea29e7e2e61e3dcdee84e3
-    # template: api.openweathermap.org/data/2.5/weather?q={city,state,country code}&units=[imperial, metric]&appid=455a8cae3fea29e7e2e61e3dcdee84e3
+    # Ex uri: https://api.openweathermap.org/data/2.5/weather?zip=48118,us&units=imperial&appid=455a8cae3fea29e7e2e61e3dcdee84e3
+    # template: api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid=455a8cae3fea29e7e2e61e3dcdee84e3
     # Condtion codes: https://openweathermap.org/weather-conditions
     def __init__(self):
         # super(Weather, self).__init__()
         # self.setParent(parent)
 
-        weather_data = self.get_weather()
-        print('Current weather data we keep track of from the request:\n' + weather_data.get_json())
+        self.weather_data = self.get_weather()
+        print('Current weather data we keep track of from the request:\n' + self.weather_data.get_json())
 
 
     def get_weather(self):
         builder = WeatherRequestBuilder()
-        response = builder.set_location(self.city, self.state, self.country_code).set_units().get()
+        response = builder.set_location(self.zip_code, self.country_code).set_units().get()
         return response.get_weather_data()
-        
+
+
+    def change_location(self, zip_code, country):
+        try:
+            self.country_code = pycountry.countries.search_fuzzy(country)[0].alpha_2
+        except LookupError:
+            print('could not find the country with the name ' + country)
+            return
+        self.zip_code = zip_code
+    
 
 
 
-    # def hide(self):
-    #     self.label.hide()
+class WeatherGUI(QWidget):
+    weather = Weather()
+    
+    def __init__(self, parent):
+        super().__init__()
+        image = 'sun.png'
+        self.setParent(parent)
 
-    # def show(self):
-    #     self.label.show()
+        self.label = QLabel(image)
+        self.label.setStyleSheet('color: white; font-size: 100px')
+        self.label.setText(image)
+        # pixmap = QPixmap(image)
+        # print(str(pixmap))
+        # self.label.setPixmap(pixmap)
 
-print('running python file...')
+    def hide(self):
+        self.label.hide()
 
-obj = Weather()
-
-
+    def show(self):
+        self.label.show()
