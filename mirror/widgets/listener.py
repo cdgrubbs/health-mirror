@@ -5,7 +5,6 @@ from PyQt5.QtCore import Qt, QRect, QTimer
 import pyaudio
 import wave
 from pprint import pprint
-from audio.process import *
 import random
 import time
 import webbrowser
@@ -67,9 +66,6 @@ class Listener(QWidget):
         self.get_results()
 
         self.setParent(parent)
-        self.label = QLabel("Hi")
-        self.label.setParent(self)
-        self.label.setStyleSheet('color: white; font-size: 100px')
 
 
     def record_audio(self):
@@ -126,29 +122,29 @@ class Listener(QWidget):
 
         for utterance in TELL_JOKE:
             if utterance.lower() == wordString.lower():
-                joke()
+                self.joke()
 
         for utterance in BREATHING:
             if utterance.lower() == wordString.lower():
-                breathe()
+                self.breathe()
 
         for utterance in MEDICATION:
             if utterance.lower() == wordString.lower():
-                medication()
+                self.medication()
 
         for utterance in LIGHTS_ON:
             if utterance.lower() == wordString.lower():
-                light_on()
+                self.light_on()
 
         for utterance in LIGHTS_OFF:
             if utterance.lower() == wordString.lower():
-                light_off()
+                self.light_off()
 
         for utterance in TALK:
             if utterance.lower() == wordString.lower():
-                talk()
+                self.talk()
 
-    def joke():
+    def joke(self):
         jokes = [
             "What do you call a computer floating in the ocean? A Dell Rolling in the Deep",
             "There are 10 types of people in the world: those who understand binary, and those who don’t",
@@ -158,29 +154,31 @@ class Listener(QWidget):
             "A programmer’s wife tells him, “While you’re at the grocery store, buy some eggs.” He never comes back"
         ]
         index = random.randint(0,5)
-        print(jokes[index])
-
-    def breathe():
+        self.label = QLabel(jokes[index])
+        self.label.setParent(self)
+        self.label.setStyleSheet('color: white; font-size: 24px')
+    
+    def breathe(self):
         print("Beginning breathing exercises")
         url = "https://www.youtube.com/watch?v=5DqTuWve9t8"
         webbrowser.open(url,new=1)
 
-    def medication():
+    def medication(self):
         print("Okay, what time would you like to set the medication for?")
         # Listen again for time
         print("Okay, how often do you want the medication reminder?")
         # Listen again for frequency
         # Set reminder
 
-    def light_on():
+    def light_on(self):
         print("Okay, turning on lights")
         # Turn on lights
 
-    def light_off():
+    def light_off(self):
         print("Okay, turning off lights")
         # Turn off lights
 
-    def talk():
+    def talk(self):
         print("Okay, what's up?")
         # Record (maybe on a loop) and hit therapy api
         

@@ -24,7 +24,10 @@ class App(QMainWindow):
         clock_widget = Clock(self)
         listener = Listener(self)
         layout.addWidget(clock_widget, 0, 0)
-        clock_widget.show()
+
+        layout.addWidget(listener, 0, 1)
+        clock_widget.hide()
+        listener.show()
 
         self.setLayout(layout)
         self.showFullScreen()
