@@ -156,12 +156,13 @@ class Listener(QWidget):
         index = random.randint(0,5)
         self.label = QLabel(jokes[index])
         self.label.setParent(self)
+        self.label.setWordWrap(True)
         self.label.setStyleSheet('color: white; font-size: 24px')
     
     def breathe(self):
         print("Beginning breathing exercises")
         url = "https://www.youtube.com/watch?v=5DqTuWve9t8"
-        webbrowser.open(url,new=1)
+        #Display youtube video
 
     def medication(self):
         print("Okay, what time would you like to set the medication for?")
