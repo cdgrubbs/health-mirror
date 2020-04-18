@@ -4,6 +4,7 @@ import json
 import urllib.parse
 import pycountry
 import os
+import time
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
 from PyQt5.QtGui import QPixmap, QIcon
@@ -55,6 +56,10 @@ class WeatherResponse():
         
 
 class WeatherRequestBuilder():
+    # https://openweathermap.org/
+    # Ex uri: https://api.openweathermap.org/data/2.5/weather?zip=48118,us&units=imperial&appid=455a8cae3fea29e7e2e61e3dcdee84e3
+    # template: api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid=455a8cae3fea29e7e2e61e3dcdee84e3
+    # Condtion codes: https://openweathermap.org/weather-conditions
     OPEN_WEATHER_API_KEY = ''
     request_str = 'https://api.openweathermap.org/data/2.5/weather?'
 
@@ -82,24 +87,16 @@ class WeatherRequestBuilder():
 
 
 class Weather():
-    zip_code = 60607 # Chicago default
-    country_code = 'us' # US
-
-    weather_data = None
-
-    # https://openweathermap.org/
-    # Ex uri: https://api.openweathermap.org/data/2.5/weather?zip=48118,us&units=imperial&appid=455a8cae3fea29e7e2e61e3dcdee84e3
-    # template: api.openweathermap.org/data/2.5/weather?zip={zip code},{country code}&appid=455a8cae3fea29e7e2e61e3dcdee84e3
-    # Condtion codes: https://openweathermap.org/weather-conditions
     def __init__(self):
-        # super(Weather, self).__init__()
-        # self.setParent(parent)
+        self.zip_code = 60607 # Chicago default
+        self.country_code = 'us' # US
 
         self.weather_data = self.get_weather()
         print('Current weather data we keep track of from the request:\n' + self.weather_data.get_json())
 
 
     def get_weather(self):
+        """Retrieves the weather for the current location."""
         builder = WeatherRequestBuilder()
         response = builder.set_location(self.zip_code, self.country_code).set_units().get()
         return response.get_weather_data()
@@ -112,8 +109,6 @@ class Weather():
             print('could not find the country with the name ' + country)
             return
         self.zip_code = zip_code
-    
-
 
 
 class WeatherGUI(QWidget):
@@ -121,25 +116,38 @@ class WeatherGUI(QWidget):
         super(WeatherGUI, self).__init__()
         self.weather = Weather()
         self.image_path = './mirror/widgets/weather/icons/'
-        # self.image = 'widgets/weather/sun.png'
-        # self.image = '/home/dustin/git/eecs/497/health-mirror/mirror/widgets/weather/sun.png'
+        
+        self.label = QLabel()
+        self.label.setParent(parent)
+        
         self.image = self.image_path + self.weather.get_weather().get_weather_icon()
         self.image += '.png'
         print('weather icon image: ' + self.image)
-        self.label = QLabel(self.image)
+
         self.pixmap = QPixmap(self.image)
-        self.label.setParent(parent)
         self.label.setPixmap(self.pixmap)
         self.resize(self.pixmap.width(), self.pixmap.height())
-        # self.label.setText('hello')
-
-        self.label.setStyleSheet('color: white; font-size: 10px')
         
-        # print(str(pixmap))
-        # self.label.setPixmap(pixmap)
+
+
+    # def update(self):
+    #     while True:
+    #         time.sleep(5) # Sleep for 60 seconds
+    #         self.image_path = './mirror/widgets/weather/icons/'
+            
+    #         self.image = self.image_path + self.weather.get_weather().get_weather_icon()
+    #         self.image += '.png'
+    #         print('weather icon image: ' + self.image)
+    #         self.label = QLabel(self.image)
+    #         self.pixmap = QPixmap(self.image)
+            
+    #         self.label.setPixmap(self.pixmap)
+    #         self.resize(self.pixmap.width(), self.pixmap.height())
+
 
     def hide(self):
         self.label.hide()
+
 
     def show(self):
         self.label.show()
