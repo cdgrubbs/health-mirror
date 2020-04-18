@@ -3,6 +3,7 @@ import requests
 import json
 import urllib.parse
 import pycountry
+import os
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
 from PyQt5.QtGui import QPixmap, QIcon
@@ -81,7 +82,7 @@ class WeatherRequestBuilder():
 
 
 class Weather():
-    zip_code = 60607
+    zip_code = 60607 # Chicago default
     country_code = 'us' # US
 
     weather_data = None
@@ -104,7 +105,7 @@ class Weather():
         return response.get_weather_data()
 
 
-    def change_location(self, zip_code, country):
+    def change_location(self, zip_code=60607, country='us'):
         try:
             self.country_code = pycountry.countries.search_fuzzy(country)[0].alpha_2
         except LookupError:
@@ -116,17 +117,24 @@ class Weather():
 
 
 class WeatherGUI(QWidget):
-    weather = Weather()
-    
     def __init__(self, parent):
-        super().__init__()
-        image = 'sun.png'
-        self.setParent(parent)
+        super(WeatherGUI, self).__init__()
+        self.weather = Weather()
+        self.image_path = './mirror/widgets/weather/icons/'
+        # self.image = 'widgets/weather/sun.png'
+        # self.image = '/home/dustin/git/eecs/497/health-mirror/mirror/widgets/weather/sun.png'
+        self.image = self.image_path + self.weather.get_weather().get_weather_icon()
+        self.image += '.png'
+        print('weather icon image: ' + self.image)
+        self.label = QLabel(self.image)
+        self.pixmap = QPixmap(self.image)
+        self.label.setParent(parent)
+        self.label.setPixmap(self.pixmap)
+        self.resize(self.pixmap.width(), self.pixmap.height())
+        # self.label.setText('hello')
 
-        self.label = QLabel(image)
-        self.label.setStyleSheet('color: white; font-size: 100px')
-        self.label.setText(image)
-        # pixmap = QPixmap(image)
+        self.label.setStyleSheet('color: white; font-size: 10px')
+        
         # print(str(pixmap))
         # self.label.setPixmap(pixmap)
 

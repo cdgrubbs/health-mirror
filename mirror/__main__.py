@@ -23,7 +23,7 @@ class App(QMainWindow):
         clock_widget.show()
 
         weather_widget = WeatherGUI(self)
-        layout.addWidget(weather_widget, 0, 1)
+        layout.addWidget(weather_widget, 1, 1)
         weather_widget.show()
 
         self.setLayout(layout)
