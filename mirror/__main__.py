@@ -7,17 +7,28 @@ from mirror.widgets.listener import Listener
 from audio.record import record_audio
 from audio.results import get_results
 
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout
+from PyQt5.QtCore import Qt, QTimer
+from mirror.widgets.clock import Clock
+from mirror.widgets.weather.weather import WeatherGUI
+from mirror.widgets.simple_widget import SimpleWidget
 
-class App(QMainWindow):
+
+class App(QWidget):
     def __init__(self):
         super().__init__()
         self.init()
     
     def init(self):
         # Changes background to black
+        self.title = "Health Mirror"
+        self.init_window()
+
+    
+    def init_window(self):
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(self.backgroundRole(), Qt.black)
+        palette.setColor(self.backgroundRole(), Qt.gray)
         self.setPalette(palette)
         self.setGeometry(0,0,200,200)
 
@@ -41,7 +52,22 @@ class App(QMainWindow):
         print(layout.getItemPosition(1))
 
         self.setLayout(layout)
+        self.create_layout()
+
         self.showFullScreen()
+
+
+    def create_layout(self):
+        grid_layout = QGridLayout()
+
+        grid_layout.addWidget(SimpleWidget(self,'red'), 0, 0)
+        grid_layout.addWidget(SimpleWidget(self,'blue'), 0, 1)
+        grid_layout.addWidget(SimpleWidget(self,'green'), 1, 1)
+        grid_layout.addWidget(SimpleWidget(self,'white'), 2, 2)
+        grid_layout.addWidget(Clock(self), 1, 0)
+        grid_layout.addWidget(WeatherGUI(self), 2, 0)
+
+        self.setLayout(grid_layout)
 
 def main():
     app = QApplication(sys.argv)
