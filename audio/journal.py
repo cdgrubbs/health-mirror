@@ -1,6 +1,6 @@
 from audio.record import *
-
-journal_entries = []
+from os import path
+import speech_recognition as sr
 
 def record_and_parse_audio():
     record_audio()
@@ -27,7 +27,9 @@ def record_and_parse_audio():
             record_audio()
 
 def handle_journal():
+    journal_entries = []
     numbers = ["first", "second", "third", "fourth", "fifth"]
+    print("Hello")
     for number in numbers:
         print("Say the {} thing you are grateful for".format(number))
         word_string = record_and_parse_audio()

@@ -206,5 +206,4 @@ class Listener(QWidget):
         self.label.show()
 
     def journal(self):
-        
-        
+        print("Hello")
