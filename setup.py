@@ -8,5 +8,5 @@ setup(
         'console_scripts': [
             'mirror = mirror.__main__:main'
         ]
-    }
+    },
 )

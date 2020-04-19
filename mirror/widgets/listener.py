@@ -66,7 +66,7 @@ JOURNAL = [
     "i want to add to my gratitude journal"
 ]
 
-AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
+AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../output.wav")
 
 class Listener(QWidget):
     def __init__(self, parent):
@@ -149,7 +149,6 @@ class Listener(QWidget):
         except sr.RequestError as e:
             print("Could not request results from Google Speech Recognition service; {0}".format(e))
 
-        print("\nMirror responds: ")
         wordString = r.recognize_google(audio)
 
         for utterance in TELL_JOKE:
@@ -193,7 +192,7 @@ class Listener(QWidget):
         self.label = QLabel(jokes[index])
         self.label.setParent(self)
         self.label.setWordWrap(True)
-        self.label.setStyleSheet('color: white; font-size: 24px')
+        self.label.setStyleSheet('color: white; font-size: 18px')
     
     def breathe(self):
         print("Beginning breathing exercises")
