@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from pprint import pprint
-from audio.journal import *
 from audio.process import *
 from audio.utterances import *
 import speech_recognition as sr
@@ -58,5 +57,5 @@ def get_results():
             talk()
 
     for utterance in JOURNAL:
-    if utterance.lower() == wordString.lower():
-        journal()
+        if utterance.lower() == wordString.lower():
+            journal()

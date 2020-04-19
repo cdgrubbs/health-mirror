@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import random
+from audio.journal import *
 
 def joke():
     print("Hey")
@@ -37,3 +38,6 @@ def light_off():
 def talk():
     print("Okay, what's up?")
     # Record (maybe on a loop) and hit therapy api
+
+def journal():
+    handle_journal()

@@ -56,6 +56,18 @@ TALK = [
     "talk to me"
 ]
 
+
+JOURNAL = [
+    "gratitude",
+    "journal",
+    "gratitude journal",
+    "add to gratitude journal"
+    "i want to do some journaling",
+    "i'd like to add to my gratitude journal",
+    "i want to add to my gratitude journal"
+]
+
+
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
 
 class Listener(QWidget):
@@ -144,6 +156,10 @@ class Listener(QWidget):
             if utterance.lower() == wordString.lower():
                 self.talk()
 
+        for utterance in JOURNAL:
+            if utterance.lower() == wordString.lower():
+                self.journal()
+
     def joke(self):
         jokes = [
             "What do you call a computer floating in the ocean? A Dell Rolling in the Deep",
@@ -188,4 +204,7 @@ class Listener(QWidget):
 
     def show(self):
         self.label.show()
+
+    def journal(self):
+        
         
