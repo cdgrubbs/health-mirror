@@ -6,6 +6,7 @@ import pycountry
 import os
 import time
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
 from PyQt5.QtGui import QPixmap, QIcon
 
@@ -114,18 +115,31 @@ class Weather():
 class WeatherGUI(QWidget):
     def __init__(self, parent):
         super(WeatherGUI, self).__init__()
+        self.setParent(parent)
+
         self.weather = Weather()
         self.image_path = './mirror/widgets/weather/icons/'
         
-        self.label = QLabel()
-        self.label.setParent(parent)
+        self.icon_label = QLabel()
+        self.icon_label.setParent(self)
+        self.icon_label.saveGeometry()
+        # self.icon_label.setAlignment(Qt.AlignLeft)
+
+        weather_data = self.weather.get_weather()
         
-        self.image = self.image_path + self.weather.get_weather().get_weather_icon()
+        self.temperature_label = QLabel()
+        self.temperature_label.setParent(self)
+        self.temperature_label.setStyleSheet('color: gray; font-size: 100px')
+        self.temperature_label.setText(str(int(weather_data.get_temperature())))
+        # self.temperature_label.setAlignment(Qt.AlignRight)
+        # self.temperature_label.move(0, 200)
+        
+        self.image = self.image_path + weather_data.get_weather_icon()
         self.image += '.png'
         print('weather icon image: ' + self.image)
 
         self.pixmap = QPixmap(self.image)
-        self.label.setPixmap(self.pixmap)
+        self.icon_label.setPixmap(self.pixmap)
         self.resize(self.pixmap.width(), self.pixmap.height())
         
 
@@ -138,16 +152,16 @@ class WeatherGUI(QWidget):
     #         self.image = self.image_path + self.weather.get_weather().get_weather_icon()
     #         self.image += '.png'
     #         print('weather icon image: ' + self.image)
-    #         self.label = QLabel(self.image)
+    #         self.icon_label = QLabel(self.image)
     #         self.pixmap = QPixmap(self.image)
             
-    #         self.label.setPixmap(self.pixmap)
+    #         self.icon_label.setPixmap(self.pixmap)
     #         self.resize(self.pixmap.width(), self.pixmap.height())
 
 
     def hide(self):
-        self.label.hide()
+        self.icon_label.hide()
 
 
     def show(self):
-        self.label.show()
+        self.icon_label.show()
