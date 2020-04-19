@@ -1,6 +1,9 @@
 build/
 mirror.egg-info/
 
+# Audio File
+output.wav
+
 # Python
 *.pyc
 __pycache__/
@@ -25,3 +28,6 @@ venv3/
 
 # Virtual Machines
 .vagrant/
+
+# vscode files
+.vscode/
