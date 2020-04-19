@@ -66,8 +66,6 @@ JOURNAL = [
     "i want to add to my gratitude journal"
 ]
 
-AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../output.wav")
-
 class Listener(QWidget):
     def __init__(self, parent):
         super(Listener, self).__init__()
@@ -110,7 +108,7 @@ class Listener(QWidget):
     def record_and_parse_audio(self):
         while True:
             self.record_audio()
-            AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../output.wav")
+            AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
 
             r = sr.Recognizer()
             with sr.AudioFile(AUDIO_FILE) as source:
