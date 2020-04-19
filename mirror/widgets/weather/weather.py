@@ -6,7 +6,7 @@ import pycountry
 import os
 import time
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
 from PyQt5.QtGui import QPixmap, QIcon
 
@@ -124,10 +124,11 @@ class WeatherGUI(QWidget):
         self.icon_label.setParent(self)
         self.icon_label.saveGeometry()
         # self.icon_label.setAlignment(Qt.AlignLeft)
-
+        icon_location = self.icon_label.pos()
         weather_data = self.weather.get_weather()
         
         self.temperature_label = QLabel()
+        self.temperature_label.move(QPoint(icon_location.x() + 175, icon_location.y()))
         self.temperature_label.setParent(self)
         self.temperature_label.setStyleSheet('color: gray; font-size: 100px')
         self.temperature_label.setText(str(int(weather_data.get_temperature())))
