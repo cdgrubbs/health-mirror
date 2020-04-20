@@ -5,15 +5,14 @@ import urllib.parse
 import pycountry
 import os
 import time
+import threading
 
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtCore import Qt, QPoint, QTimer
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
 from PyQt5.QtGui import QPixmap, QIcon
 
 
 class WeatherData():
-    weather_dict = {}
-
     def __init__(self, weather_dict):
         self.weather_dict = weather_dict
     
@@ -35,12 +34,16 @@ class WeatherData():
     def get_weather_type(self):
         return self.get_item('main')
 
+
     def get_temperature(self):
         return self.get_item('temp')
 
 
+    def get_city(self):
+        return str(self.get_item('name'))
+
+
 class WeatherResponse():
-    response = ''
     def __init__(self, response):
         self.response = response.json()
 
@@ -53,6 +56,7 @@ class WeatherResponse():
         assert(len(self.response['weather']) == 1)
         weather_dict = self.response['weather'][0]
         weather_dict.update(self.response['main'])
+        weather_dict['name'] = self.response['name']
         return WeatherData(weather_dict)
         
 
@@ -83,7 +87,6 @@ class WeatherRequestBuilder():
     def get(self):
         # Add the API key to the request
         self.request_str += '&appid=' + self.OPEN_WEATHER_API_KEY
-        print('sending the request: ' + self.request_str)
         return WeatherResponse(requests.get(self.request_str))
 
 
@@ -91,9 +94,6 @@ class Weather():
     def __init__(self):
         self.zip_code = 60607 # Chicago default
         self.country_code = 'us' # US
-
-        self.weather_data = self.get_weather()
-        print('Current weather data we keep track of from the request:\n' + self.weather_data.get_json())
 
 
     def get_weather(self):
@@ -116,53 +116,56 @@ class WeatherGUI(QWidget):
     def __init__(self, parent):
         super(WeatherGUI, self).__init__()
         self.setParent(parent)
-
         self.weather = Weather()
         self.image_path = './mirror/widgets/weather/icons/'
-        
+
         self.icon_label = QLabel()
         self.icon_label.setParent(self)
-        self.icon_label.saveGeometry()
-        # self.icon_label.setAlignment(Qt.AlignLeft)
+
         icon_location = self.icon_label.pos()
-        weather_data = self.weather.get_weather()
-        
+
         self.temperature_label = QLabel()
-        self.temperature_label.move(QPoint(icon_location.x() + 175, icon_location.y()))
         self.temperature_label.setParent(self)
-        self.temperature_label.setStyleSheet('color: gray; font-size: 100px')
-        self.temperature_label.setText(str(int(weather_data.get_temperature())))
-        # self.temperature_label.setAlignment(Qt.AlignRight)
-        # self.temperature_label.move(0, 200)
+        self.temperature_label.move(QPoint(icon_location.x() + 175, icon_location.y()))
+        self.temperature_label.setStyleSheet('color: white; font-size: 100px')
+
+
+        self.location_label = QLabel()
+        self.location_label.setParent(self)
+        self.location_label.move(QPoint(icon_location.x(), icon_location.y() + 100))
+        self.location_label.setStyleSheet('color: white; font-size: 25px')
+    
+        self.update()
+
+        self.refresh_timer = QTimer(self)
+        self.refresh_timer.timeout.connect(self.update)
+        self.refresh_timer.start(10 * 60 * 1000) # 10 minutes
+
+
+    def update(self):
+        weather_data = self.weather.get_weather()
+       
+        degree_sign = u"\N{DEGREE SIGN}"
+
+        self.temperature_label.setText(str(int(weather_data.get_temperature())) + degree_sign)
+        self.temperature_label.move(QPoint(0 + 175, 0))
+
+        self.location_label.setText(weather_data.get_city())
         
-        self.image = self.image_path + weather_data.get_weather_icon()
-        self.image += '.png'
-        print('weather icon image: ' + self.image)
+        image = self.image_path + weather_data.get_weather_icon()
+        image += '.png'
 
-        self.pixmap = QPixmap(self.image)
-        self.icon_label.setPixmap(self.pixmap)
-        self.resize(self.pixmap.width(), self.pixmap.height())
-        
-
-
-    # def update(self):
-    #     while True:
-    #         time.sleep(5) # Sleep for 60 seconds
-    #         self.image_path = './mirror/widgets/weather/icons/'
-            
-    #         self.image = self.image_path + self.weather.get_weather().get_weather_icon()
-    #         self.image += '.png'
-    #         print('weather icon image: ' + self.image)
-    #         self.icon_label = QLabel(self.image)
-    #         self.pixmap = QPixmap(self.image)
-            
-    #         self.icon_label.setPixmap(self.pixmap)
-    #         self.resize(self.pixmap.width(), self.pixmap.height())
+        pixmap = QPixmap(image)
+        self.icon_label.setPixmap(pixmap)
 
 
     def hide(self):
         self.icon_label.hide()
+        self.temperature_label.hide()
+        self.location_label.hide()
 
 
     def show(self):
-        self.icon_label.show()
+        self.icon_label.hide()
+        self.temperature_label.hide()
+        self.location_label.hide()

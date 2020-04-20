@@ -16,7 +16,8 @@ class App(QWidget):
     def __init__(self):
         super().__init__()
         self.init()
-    
+
+
     def init(self):
         # Changes background to black
         self.title = "Health Mirror"
