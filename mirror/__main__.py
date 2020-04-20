@@ -1,4 +1,11 @@
 import sys
+import os
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout
+from PyQt5.QtCore import Qt, QTimer
+from mirror.widgets.clock import Clock
+from mirror.widgets.listener import Listener
+from audio.record import record_audio
+from audio.results import get_results
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout
 from PyQt5.QtCore import Qt, QTimer
@@ -22,7 +29,7 @@ class App(QWidget):
     def init_window(self):
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(self.backgroundRole(), Qt.gray)
+        palette.setColor(self.backgroundRole(), Qt.black)
         self.setPalette(palette)
 
         self.create_layout()
@@ -33,12 +40,12 @@ class App(QWidget):
     def create_layout(self):
         grid_layout = QGridLayout()
 
-        grid_layout.addWidget(SimpleWidget(self,'red'), 0, 0)
-        grid_layout.addWidget(SimpleWidget(self,'blue'), 0, 1)
-        grid_layout.addWidget(SimpleWidget(self,'green'), 1, 1)
-        grid_layout.addWidget(SimpleWidget(self,'white'), 2, 2)
-        grid_layout.addWidget(Clock(self), 1, 0)
-        grid_layout.addWidget(WeatherGUI(self), 2, 0)
+        #grid_layout.addWidget(SimpleWidget(self,'red'), 0, 0)
+        #grid_layout.addWidget(SimpleWidget(self,'blue'), 0, 1)
+        #grid_layout.addWidget(SimpleWidget(self,'green'), 1, 1)
+        grid_layout.addWidget(SimpleWidget(self,'Qt.gray'), 2, 2)
+        grid_layout.addWidget(Clock(self), 0, 0)
+        grid_layout.addWidget(Listener(self), 1, 1)
 
         self.setLayout(grid_layout)
 
