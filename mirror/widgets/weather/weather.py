@@ -139,7 +139,7 @@ class WeatherGUI(QWidget):
 
         self.refresh_timer = QTimer(self)
         self.refresh_timer.timeout.connect(self.update)
-        self.refresh_timer.start(5 * 60 * 1000) # TODO make it 5-10 Minutes
+        self.refresh_timer.start(10 * 60 * 1000) # 10 minutes
 
 
     def update(self):
