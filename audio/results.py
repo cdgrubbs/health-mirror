@@ -3,7 +3,6 @@
 from pprint import pprint
 from audio.process import *
 from audio.utterances import *
-
 import speech_recognition as sr
 
 # obtain path to "english.wav" in the same folder as this script
@@ -56,3 +55,7 @@ def get_results():
     for utterance in TALK:
         if utterance.lower() == wordString.lower():
             talk()
+
+    for utterance in JOURNAL:
+        if utterance.lower() == wordString.lower():
+            journal()

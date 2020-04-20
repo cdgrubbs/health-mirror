@@ -56,7 +56,15 @@ TALK = [
     "talk to me"
 ]
 
-AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../output.wav")
+JOURNAL = [
+    "gratitude",
+    "journal",
+    "gratitude journal",
+    "add to gratitude journal"
+    "i want to do some journaling",
+    "i'd like to add to my gratitude journal",
+    "i want to add to my gratitude journal"
+]
 
 class Listener(QWidget):
     def __init__(self, parent):
@@ -64,9 +72,8 @@ class Listener(QWidget):
         self.record_audio()
         time.sleep(5)
         self.get_results()
-
         self.setParent(parent)
-
+        self.journal_entries = []
 
     def record_audio(self):
         p = pyaudio.PyAudio()
@@ -98,6 +105,29 @@ class Listener(QWidget):
         wf.writeframes(b''.join(frames))
         wf.close()
     
+    def record_and_parse_audio(self):
+        while True:
+            self.record_audio()
+            AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
+
+            r = sr.Recognizer()
+            with sr.AudioFile(AUDIO_FILE) as source:
+                audio = r.record(source)
+
+            try:
+                print("You said:")
+                print(r.recognize_google(audio))
+                wordString = r.recognize_google(audio)
+                return wordString
+
+            except sr.UnknownValueError:
+                print("Google Speech Recognition could not understand audio")
+                print("Please try again")
+
+            except sr.RequestError as e:
+                print("Could not request results from Google Speech Recognition service; {0}".format(e))
+                print("Please try again")
+
     def get_results(self):
         # use the audio file as the audio source
         r = sr.Recognizer()
@@ -143,6 +173,10 @@ class Listener(QWidget):
             if utterance.lower() == wordString.lower():
                 self.talk()
 
+        for utterance in JOURNAL:
+            if utterance.lower() == wordString.lower():
+                self.journal()
+
     def joke(self):
         jokes = [
             "What do you call a computer floating in the ocean? A Dell Rolling in the Deep",
@@ -187,4 +221,13 @@ class Listener(QWidget):
 
     def show(self):
         self.label.show()
-        
+
+    def journal(self):
+        numbers = ["first", "second", "third", "fourth", "fifth"]
+        print("Hello")
+        for number in numbers:
+            print("Say the {} thing you are grateful for".format(number))
+            word_string = self.record_and_parse_audio()
+            self.journal_entries.append(word_string)
+            if len(self.journal_entries) > 50:
+                journal_entries = journal_entries[1:]

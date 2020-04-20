@@ -1,8 +1,12 @@
 build/
 mirror.egg-info/
 
+# Audio File
+output.wav
+
 # Python
 *.pyc
+mirror/__pycache__/
 __pycache__/
 *.egg-info*
 dist/
@@ -25,3 +29,6 @@ venv3/
 
 # Virtual Machines
 .vagrant/
+
+# vscode files
+.vscode/

@@ -4,8 +4,6 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLay
 from PyQt5.QtCore import Qt, QTimer
 from mirror.widgets.clock import Clock
 from mirror.widgets.listener import Listener
-from audio.record import record_audio
-from audio.results import get_results
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout
 from PyQt5.QtCore import Qt, QTimer
