@@ -141,14 +141,18 @@ class Listener(QWidget):
             # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY", show_all=True)`
             # instead of `r.recognize_google(audio, show_all=True)`
             print("You said:")
-            print(r.recognize_google(audio))
+            # print(r.recognize_google(audio))
+            wordString = r.recognize_google(audio)
+            print(wordString)
             #pprint(r.recognize_google(audio, show_all=True))  # pretty-print the recognition result
         except sr.UnknownValueError:
             print("Google Speech Recognition could not understand audio")
+            return
         except sr.RequestError as e:
             print("Could not request results from Google Speech Recognition service; {0}".format(e))
+            return
 
-        wordString = r.recognize_google(audio)
+        
 
         for utterance in TELL_JOKE:
             if utterance.lower() == wordString.lower():
