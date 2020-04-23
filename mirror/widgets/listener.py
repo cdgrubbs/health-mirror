@@ -8,6 +8,7 @@ from pprint import pprint
 import random
 import time
 import webbrowser
+from datetime import datetime
 
 import speech_recognition as sr
 
@@ -199,11 +200,16 @@ class Listener(QWidget):
         #Display youtube video
 
     def medication(self):
-        print("Okay, what time would you like to set the medication for?")
-        # Listen again for time
-        print("Okay, how often do you want the medication reminder?")
-        # Listen again for frequency
-        # Set reminder
+        self.time = datetime.now()
+        current_time = self.time.strftime("%I:%M %p")
+        if current_time[0] == "0":
+            current_time = current_time[1:]
+
+        string = "Okay, a medication reminder has been set for " + current_time
+
+        self.label = QLabel(string)
+        self.label.setParent(self)
+        self.label.setStyleSheet('color: white; font-size: 18px')
 
     def light_on(self):
         print("Okay, turning on lights")
