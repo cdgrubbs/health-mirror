@@ -166,6 +166,6 @@ class WeatherGUI(QWidget):
 
 
     def show(self):
-        self.icon_label.hide()
-        self.temperature_label.hide()
-        self.location_label.hide()
+        self.icon_label.show()
+        self.temperature_label.show()
+        self.location_label.show()
