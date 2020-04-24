@@ -20,6 +20,7 @@ CHANNELS = 2
 RATE = 44100
 RECORD_SECONDS = 5
 WAVE_OUTPUT_FILENAME = "audio_recording.wav"
+
 TELL_JOKE = [
     "tell me a joke",
     "tell a joke",
@@ -79,6 +80,7 @@ REFLECTION = [
 
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
+# AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), WAVE_OUTPUT_FILENAME)
 
 def record_audio():
     p = pyaudio.PyAudio()
