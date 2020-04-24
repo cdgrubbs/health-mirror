@@ -19,6 +19,7 @@ CHANNELS = 2
 RATE = 44100
 RECORD_SECONDS = 5
 WAVE_OUTPUT_FILENAME = "audio_recording.wav"
+
 TELL_JOKE = [
     "tell me a joke",
     "tell a joke",
@@ -66,7 +67,7 @@ JOURNAL = [
     "i want to add to my gratitude journal"
 ]
 
-AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
+AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), WAVE_OUTPUT_FILENAME)
 
 class Listener(QWidget):
     def __init__(self, parent):
@@ -99,7 +100,7 @@ class Listener(QWidget):
         stream.close()
         p.terminate()
 
-        OUTPUT_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
+        OUTPUT_FILE = path.join(path.dirname(path.realpath(__file__)), WAVE_OUTPUT_FILENAME)
         wf = wave.open(OUTPUT_FILE, 'wb')
         wf.setnchannels(CHANNELS)
         wf.setsampwidth(p.get_sample_size(FORMAT))

@@ -1,9 +1,10 @@
 import sys
 import os
 
-from PyQt5 import QtGui
+from PyQt5 import QtGui, QtCore
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout, QDesktopWidget
 from PyQt5.QtCore import Qt, QTimer
+
 from mirror.widgets.clock import Clock
 from mirror.widgets.listener import Listener
 
@@ -70,10 +71,16 @@ class App(QWidget):
             self.w2.show()
 
     def createButtons(self):
-        button = QPushButton('mic', self)
-        button.setIcon(QtGui.QIcon("mic.png"))
+        button = QPushButton(self)
+        print(os.getcwd())
+        icon = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mic.png")
+        print(icon)
+        print(os.path.join(os.path.dirname(os.path.realpath(__file__))))
+        button.setIcon(QtGui.QIcon(icon))
+        button.setIconSize(QtCore.QSize(80, 80))
         button.clicked.connect(self.on_click)
         button.resize(button.sizeHint())
+        # button.resize(button.sizeHint())
         button.move(self.fullWidth / 2 - 50, self.fullHeight - 200)
 
         full = QPushButton('full screen', self)
