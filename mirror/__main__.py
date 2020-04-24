@@ -14,6 +14,7 @@ from PyQt5.QtCore import Qt, QTimer
 from mirror.widgets.clock import Clock
 from mirror.widgets.weather.weather import WeatherGUI
 from mirror.widgets.simple_widget import SimpleWidget
+from mirror.widgets.joke import Joke
 
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtCore import pyqtSlot
@@ -54,16 +55,19 @@ class App(QWidget):
         self.w2 = WeatherGUI(self) # place holder
         self.w3 = Journal(self)
         self.w4 = Reflection(self)
+        self.w5 = Joke(self)
 
         self.grid_layout.addWidget(self.w1, 1, 1)
         self.grid_layout.addWidget(self.w2, 1, 1)
         self.grid_layout.addWidget(self.w3, 1, 1)
         self.grid_layout.addWidget(self.w4, 1, 1)
+        self.grid_layout.addWidget(self.w5, 1, 1)
 
         self.w1.hide()
         self.w2.hide()
         self.w3.hide()
         self.w4.hide()
+        self.w5.hide()
         # grid_layout.addWidget(self.l, 1, 1)
         self.setLayout(self.grid_layout)
 
@@ -71,8 +75,11 @@ class App(QWidget):
         print('editing layout')
         # will be changed after other widgets are made
         if widgetName == 'joke':
-            self.w1.show()
+            self.w1.hide()
             self.w2.hide()
+            self.w3.hide()
+            self.w4.hide()
+            self.w5.show()
         elif widgetName == 'breathe':
             self.w1.hide()
             self.w2.show()
