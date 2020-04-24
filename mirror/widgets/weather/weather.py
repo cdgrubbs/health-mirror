@@ -92,7 +92,7 @@ class WeatherRequestBuilder():
 
 class Weather():
     def __init__(self):
-        self.zip_code = 60607 # Chicago default
+        self.zip_code = 48103 # Chicago default
         self.country_code = 'us' # US
 
 
@@ -132,7 +132,7 @@ class WeatherGUI(QWidget):
 
         self.location_label = QLabel()
         self.location_label.setParent(self)
-        self.location_label.move(QPoint(icon_location.x(), icon_location.y() + 100))
+        self.location_label.move(QPoint(icon_location.x(), icon_location.y() + 130))
         self.location_label.setStyleSheet('color: white; font-size: 25px')
     
         self.update()
@@ -166,6 +166,6 @@ class WeatherGUI(QWidget):
 
 
     def show(self):
-        self.icon_label.hide()
-        self.temperature_label.hide()
-        self.location_label.hide()
+        self.icon_label.show()
+        self.temperature_label.show()
+        self.location_label.show()
