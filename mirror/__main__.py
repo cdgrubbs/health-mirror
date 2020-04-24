@@ -3,7 +3,7 @@ import os
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout
 from PyQt5.QtCore import Qt, QTimer
 from mirror.widgets.clock import Clock
-from mirror.widgets.listener import Listener
+#from mirror.widgets.listener import Listener
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout
 from PyQt5.QtCore import Qt, QTimer
@@ -44,7 +44,7 @@ class App(QWidget):
         # grid_layout.addWidget(SimpleWidget(self,'Qt.gray'), 2, 2)
         grid_layout.addWidget(Clock(self), 0, 0)
         grid_layout.addWidget(WeatherGUI(self), 0, 1)
-        grid_layout.addWidget(Listener(self), 1, 1)
+        #grid_layout.addWidget(Listener(self), 1, 1)
 
         self.setLayout(grid_layout)
 
