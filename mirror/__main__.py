@@ -43,9 +43,11 @@ class App(QWidget):
         #grid_layout.addWidget(SimpleWidget(self,'blue'), 0, 1)
         #grid_layout.addWidget(SimpleWidget(self,'green'), 1, 1)
         # grid_layout.addWidget(SimpleWidget(self,'Qt.gray'), 2, 2)
+        b = Breathing(self)
         grid_layout.addWidget(Clock(self), 0, 0)
         grid_layout.addWidget(WeatherGUI(self), 0, 1)
-        grid_layout.addWidget(Breathing(self), 1, 0)
+        grid_layout.addWidget(b, 1, 0)
+        b.do_breathing()
         #grid_layout.addWidget(Listener(self), 1, 1)
 
         self.setLayout(grid_layout)

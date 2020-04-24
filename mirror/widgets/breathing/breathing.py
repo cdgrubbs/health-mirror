@@ -11,6 +11,7 @@ from PyQt5.QtCore import Qt, QPoint, QTimer
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
 from PyQt5.QtGui import QImage, QIcon, QBrush, QPixmap
 
+breathingtimer = QTimer()
 
 class Breathing(QWidget):
     def __init__(self,parent):
@@ -26,16 +27,37 @@ class Breathing(QWidget):
         self.background.setPixmap(QPixmap(self.image_path).scaled(self.width, self.height))
         self.background.setScaledContents(True)
 
+        self.start = 0
+        self.label = QLabel("Breath")
+        self.label.setParent(self)
+        self.label.move(QPoint(0 + 175, 450))
+        self.label.setStyleSheet('color: white; font-size: 100px')
+
+        breathingtimer.timeout.connect(self.breath)
+
+    def do_breathing(self):
         self.show()
+        self.counter = 13
+        breathingtimer.start(1000)
+
+    def breath(self):
+        if self.counter > 0:
+            if (self.start > 0):
+                self.label.setText(str(self.start))
+                self.start -= 1
+            else:
+                self.start = 3
+                self.label.setText("Breath")
+            self.counter -= 1
+        else:
+            self.hide()
+            breathingtimer.stop()
+
+    def hide(self):
+        self.background.hide()
+        self.label.hide()
 
 
-def hide(self):
-    self.icon_label.hide()
-    self.temperature_label.hide()
-    self.location_label.hide()
-
-
-def show(self):
-    self.icon_label.hide()
-    self.temperature_label.hide()
-    self.location_label.hide()
+    def show(self):
+        self.background.show()
+        self.label.show()
