@@ -17,6 +17,8 @@ from mirror.widgets.weather.weather import WeatherGUI
 from mirror.widgets.simple_widget import SimpleWidget
 from mirror.widgets.joke import Joke
 
+from mirror.widgets.breathing.breathing import Breathing
+
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtCore import pyqtSlot
 
@@ -57,18 +59,21 @@ class App(QWidget):
         self.w3 = Journal(self)
         self.w4 = Reflection(self)
         self.w5 = Joke(self)
+        self.w6 = Breathing(self)
 
         self.grid_layout.addWidget(self.w1, 1, 1)
         self.grid_layout.addWidget(self.w2, 1, 1)
         self.grid_layout.addWidget(self.w3, 1, 1)
         self.grid_layout.addWidget(self.w4, 1, 1)
         self.grid_layout.addWidget(self.w5, 1, 1)
+        self.grid_layout.addWidget(self.w6, 1, 1)
 
         self.w1.hide()
         self.w2.hide()
         self.w3.hide()
         self.w4.hide()
         self.w5.hide()
+        self.w6.hide()
         # grid_layout.addWidget(self.l, 1, 1)
         self.setLayout(self.grid_layout)
 
@@ -84,6 +89,7 @@ class App(QWidget):
         elif widgetName == 'breathe':
             self.w1.hide()
             self.w2.show()
+            self.w6.show()
         elif widgetName == 'journal':
             self.w3.show()
             self.w3.doJournal()
