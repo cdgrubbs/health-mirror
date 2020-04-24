@@ -9,6 +9,7 @@ from mirror.widgets.clock import Clock
 from mirror.widgets.listener import Listener
 from mirror.widgets.journal import Journal
 from mirror.widgets.reflection import Reflection
+from mirror.widgets.reminders import Reminders
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout, QMessageBox
 from PyQt5.QtCore import Qt, QTimer
@@ -55,11 +56,13 @@ class App(QWidget):
         self.w2 = WeatherGUI(self) # place holder
         self.w3 = Journal(self)
         self.w4 = Reflection(self)
+        self.w5 = Reminders(self)
 
         self.grid_layout.addWidget(self.w1, 1, 1)
         self.grid_layout.addWidget(self.w2, 1, 1)
         self.grid_layout.addWidget(self.w3, 1, 1)
         self.grid_layout.addWidget(self.w4, 1, 1)
+        self.grid_layout.addWidget(self.w5, 1, 1)
 
         self.w1.hide()
         self.w2.hide()
@@ -88,7 +91,10 @@ class App(QWidget):
             self.w3.hide()
             self.w4.show()
             self.w4.doReflection()
-
+        elif widgetName == "reminder":
+            self.w5.show()
+            self.w5.setReminder()
+            
     def createButtons(self):
         button = QPushButton(self)
         print(os.getcwd())

@@ -7,7 +7,7 @@ class Reflection(QWidget):
         super(Reflection, self).__init__()
         self.wordLabel = QLabel(self)
         self.wordLabel.setStyleSheet('font-size: 18pt; color: white;')
-        self.wordLabel.setGeometry(50, 50, 200, 100)
+        self.wordLabel.setGeometry(50, 50, 700, 100)
     
     def doReflection(self):
         self.counter = 0
@@ -21,7 +21,7 @@ class Reflection(QWidget):
             self.wordLabel.hide()
             return
 
-        self.wordLabel.setText("Reflection Time\n             " + str(math.ceil(30-self.counter)))
+        self.wordLabel.setText("How was your day today? " + str(math.ceil(30-self.counter)))
         self.counter += 0.3
 
     def show(self):
