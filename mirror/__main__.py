@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLay
 from PyQt5.QtCore import Qt, QTimer
 from mirror.widgets.clock import Clock
 from mirror.widgets.listener import Listener
+from mirror.widgets.journal import Journal
+from mirror.widgets.reflection import Reflection
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout, QMessageBox
 from PyQt5.QtCore import Qt, QTimer
@@ -27,8 +29,8 @@ class App(QWidget):
     def __init__(self):
         super().__init__()
         self.title = "Health Mirror"
-        self.fullWidth = 2560
-        self.fullHeight = 1440
+        self.fullWidth = 1920
+        self.fullHeight = 1080
 
         self.initGUI()
 
@@ -50,12 +52,18 @@ class App(QWidget):
 
         self.w1 = Clock(self) # place holder
         self.w2 = WeatherGUI(self) # place holder
+        self.w3 = Journal(self)
+        self.w4 = Reflection(self)
 
         self.grid_layout.addWidget(self.w1, 1, 1)
         self.grid_layout.addWidget(self.w2, 1, 1)
+        self.grid_layout.addWidget(self.w3, 1, 1)
+        self.grid_layout.addWidget(self.w4, 1, 1)
 
         self.w1.hide()
         self.w2.hide()
+        self.w3.hide()
+        self.w4.hide()
         # grid_layout.addWidget(self.l, 1, 1)
         self.setLayout(self.grid_layout)
 
@@ -68,6 +76,17 @@ class App(QWidget):
         elif widgetName == 'breathe':
             self.w1.hide()
             self.w2.show()
+        elif widgetName == 'journal':
+            self.w3.show()
+            self.w3.doJournal()
+        elif widgetName == 'read_journal':
+            self.w4.hide()
+            self.w3.show()
+            self.w3.readEntries()
+        elif widgetName == 'reflection':
+            self.w3.hide()
+            self.w4.show()
+            self.w4.doReflection()
 
     def createButtons(self):
         button = QPushButton('mic', self)

@@ -5,7 +5,6 @@ from PyQt5.QtCore import Qt, QRect, QTimer
 import pyaudio
 import wave
 from pprint import pprint
-import math
 import random
 import time
 import webbrowser
@@ -68,6 +67,10 @@ JOURNAL = [
     "i want to add to my gratitude journal"
 ]
 
+READ_JOURNAL = [
+    "read journal"
+]
+
 REFLECTION = [
     "reflection",
     "reflection time"
@@ -76,44 +79,65 @@ REFLECTION = [
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
 
+def record_audio():
+    p = pyaudio.PyAudio()
+    stream = p.open(format=FORMAT,
+                    channels=CHANNELS,
+                    rate=RATE,
+                    input=True,
+                    frames_per_buffer=CHUNK)
+    print("* recording")
+    frames = []
+    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+        data = stream.read(CHUNK)
+        frames.append(data)
+    print("* done recording")
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
+
+    OUTPUT_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
+    wf = wave.open(OUTPUT_FILE, 'wb')
+    wf.setnchannels(CHANNELS)
+    wf.setsampwidth(p.get_sample_size(FORMAT))
+    wf.setframerate(RATE)
+    wf.writeframes(b''.join(frames))
+    wf.close()
+
+def record_and_parse_audio():
+    while True:
+        record_audio()
+
+        r = sr.Recognizer()
+        with sr.AudioFile(AUDIO_FILE) as source:
+            audio = r.record(source)
+
+        try:
+            print("You said:")
+            wordString = r.recognize_google(audio)
+            print(wordString)
+            return wordString
+
+        except sr.UnknownValueError:
+            print("Google Speech Recognition could not understand audio")
+            print("Please try again")
+
+        except sr.RequestError as e:
+            print("Could not request results from Google Speech Recognition service; {0}".format(e))
+            print("Please try again")
+
 class Listener(QWidget):
     def __init__(self, parent):
         super(Listener, self).__init__()
-        self.journal_entries = []
         # self.record_audio()
         # time.sleep(5)
         # self.get_results()
         # self.setParent(parent)
 
     def doListener(self):
-        self.record_audio()
+        record_audio()
         time.sleep(5)
         return self.get_results()
-
-    def record_audio(self):
-        p = pyaudio.PyAudio()
-        stream = p.open(format=FORMAT,
-                        channels=CHANNELS,
-                        rate=RATE,
-                        input=True,
-                        frames_per_buffer=CHUNK)
-        print("* recording")
-        frames = []
-        for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-            data = stream.read(CHUNK)
-            frames.append(data)
-        print("* done recording")
-        stream.stop_stream()
-        stream.close()
-        p.terminate()
-
-        OUTPUT_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
-        wf = wave.open(OUTPUT_FILE, 'wb')
-        wf.setnchannels(CHANNELS)
-        wf.setsampwidth(p.get_sample_size(FORMAT))
-        wf.setframerate(RATE)
-        wf.writeframes(b''.join(frames))
-        wf.close()
 
     def get_results(self):
         # use the audio file as the audio source
@@ -159,31 +183,16 @@ class Listener(QWidget):
         for utterance in JOURNAL:
             if utterance.lower() == wordString.lower():
                 widgetName = 'journal'
+            
+        for utterance in READ_JOURNAL:
+            if utterance.lower() == wordString.lower():
+                widgetName = 'read_journal'
+        
+        for utterance in REFLECTION:
+            if utterance.lower() == wordString.lower():
+                widgetName = 'reflection'
 
         return widgetName
-
-    # I think we can delete this?
-    def record_and_parse_audio(self):
-        while True:
-            self.record_audio()
-
-            r = sr.Recognizer()
-            with sr.AudioFile(AUDIO_FILE) as source:
-                audio = r.record(source)
-
-            try:
-                print("You said:")
-                print(r.recognize_google(audio))
-                wordString = r.recognize_google(audio)
-                return wordString
-
-            except sr.UnknownValueError:
-                print("Google Speech Recognition could not understand audio")
-                print("Please try again")
-
-            except sr.RequestError as e:
-                print("Could not request results from Google Speech Recognition service; {0}".format(e))
-                print("Please try again")
 
     def hide(self):
         self.label.hide()
