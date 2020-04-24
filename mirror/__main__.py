@@ -9,6 +9,7 @@ from mirror.widgets.clock import Clock
 from mirror.widgets.listener import Listener
 from mirror.widgets.journal import Journal
 from mirror.widgets.reflection import Reflection
+from mirror.widgets.reminders import Reminders
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QGridLayout, QMessageBox
 from PyQt5.QtCore import Qt, QTimer
@@ -33,8 +34,8 @@ class App(QWidget):
     def __init__(self):
         super().__init__()
         self.title = "Health Mirror"
-        self.fullWidth = 1920
-        self.fullHeight = 1080
+        self.fullWidth = 2560
+        self.fullHeight = 1440
 
         self.initGUI()
 
@@ -60,6 +61,7 @@ class App(QWidget):
         self.w4 = Reflection(self)
         self.w5 = Joke(self)
         self.w6 = Breathing(self)
+        self.w7 = Reminders(self)
 
         self.grid_layout.addWidget(self.w1, 1, 1)
         self.grid_layout.addWidget(self.w2, 1, 1)
@@ -101,7 +103,10 @@ class App(QWidget):
             self.w3.hide()
             self.w4.show()
             self.w4.doReflection()
-
+        elif widgetName == "reminder":
+            self.w7.show()
+            self.w7.setReminder()
+            
     def createButtons(self):
         button = QPushButton(self)
         print(os.getcwd())

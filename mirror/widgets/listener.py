@@ -78,6 +78,11 @@ REFLECTION = [
     "reflection time"
 ]
 
+REMINDER = [
+    "reminder",
+    "medication reminder"
+]
+
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
 # AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), WAVE_OUTPUT_FILENAME)
@@ -194,6 +199,10 @@ class Listener(QWidget):
         for utterance in REFLECTION:
             if utterance.lower() == wordString.lower():
                 widgetName = 'reflection'
+
+        for utterance in REMINDER:
+            if utterance.lower() == wordString.lower():
+                widgetName = 'reminder'
 
         return widgetName
 
