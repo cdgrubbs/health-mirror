@@ -20,7 +20,7 @@ venv3/
 *~
 *.lock
 *.swp
-*.idea
+.idea/
 .vscode
 .ropeproject/
 .vscode/
