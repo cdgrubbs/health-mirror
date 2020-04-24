@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt, QRect, QTimer
 import pyaudio
 import wave
 from pprint import pprint
+import math
 import random
 import time
 import webbrowser
@@ -59,11 +60,17 @@ TALK = [
 JOURNAL = [
     "gratitude",
     "journal",
+    "journaling",
     "gratitude journal",
     "add to gratitude journal"
     "i want to do some journaling",
     "i'd like to add to my gratitude journal",
     "i want to add to my gratitude journal"
+]
+
+REFLECTION = [
+    "reflection",
+    "reflection time"
 ]
 
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
@@ -75,7 +82,6 @@ class Listener(QWidget):
         time.sleep(5)
         self.get_results()
         self.setParent(parent)
-        self.journal_entries = []
 
     def record_audio(self):
         p = pyaudio.PyAudio()
@@ -152,8 +158,6 @@ class Listener(QWidget):
             print("Could not request results from Google Speech Recognition service; {0}".format(e))
             return
 
-        
-
         for utterance in TELL_JOKE:
             if utterance.lower() == wordString.lower():
                 self.joke()
@@ -181,6 +185,10 @@ class Listener(QWidget):
         for utterance in JOURNAL:
             if utterance.lower() == wordString.lower():
                 self.journal()
+
+        for utterance in REFLECTION:
+            if utterance.lower() == wordString.lower():
+                self.reflection()
 
     def joke(self):
         jokes = [
@@ -228,11 +236,37 @@ class Listener(QWidget):
         self.label.show()
 
     def journal(self):
-        numbers = ["first", "second", "third", "fourth", "fifth"]
-        print("Hello")
+        journal = []
+        numbers = ["first", "second", "third"]
         for number in numbers:
             print("Say the {} thing you are grateful for".format(number))
             word_string = self.record_and_parse_audio()
-            self.journal_entries.append(word_string)
-            if len(self.journal_entries) > 50:
-                journal_entries = journal_entries[1:]
+            journal.append(word_string)
+        output = "I am grateful for:\n"
+        output += "1) " + journal[-3] + "\n"
+        output += "2) " + journal[-2] + "\n"
+        output += "3) " + journal[-1] + "\n"
+        self.label = QLabel(output)
+        self.label.setParent(self)
+        self.label.setWordWrap(True)
+        self.label.setStyleSheet('color: white; font-size: 30px')
+    
+    def reflection(self):
+        self.counter = 0
+
+        self.wordLabel = QLabel(self)
+        self.wordLabel.setStyleSheet('font-size: 18pt; color: white;')
+        self.wordLabel.setGeometry(50, 50, 200, 100)
+
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.onTimeout)
+        self.timer.start(300)
+
+    def onTimeout(self):
+        if self.counter >= 30:
+            self.timer.stop()
+            self.wordLabel.hide()
+            return
+
+        self.wordLabel.setText("Reflection Time\n             " + str(math.ceil(30-self.counter)))
+        self.counter += 0.3
