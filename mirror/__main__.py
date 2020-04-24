@@ -31,8 +31,8 @@ class App(QWidget):
     def __init__(self):
         super().__init__()
         self.title = "Health Mirror"
-        self.fullWidth = 1920
-        self.fullHeight = 1080
+        self.fullWidth = 2560
+        self.fullHeight = 1440
 
         self.initGUI()
 
