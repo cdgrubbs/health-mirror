@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8483efb5-289f-4e38-aa90-66834fd8d479" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/bin/install" beforeDir="false" afterPath="$PROJECT_DIR$/bin/install" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mirror/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/mirror/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mirror/widgets/listener.py" beforeDir="false" afterPath="$PROJECT_DIR$/mirror/widgets/listener.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mirror/widgets/weather/weather.py" beforeDir="false" afterPath="$PROJECT_DIR$/mirror/widgets/weather/weather.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-    </list>
+    <list default="true" id="8483efb5-289f-4e38-aa90-66834fd8d479" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
