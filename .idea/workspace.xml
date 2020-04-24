@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8483efb5-289f-4e38-aa90-66834fd8d479" name="Default Changelist" comment="" />
+    <list default="true" id="8483efb5-289f-4e38-aa90-66834fd8d479" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/audio_recording.wav" beforeDir="false" afterPath="$PROJECT_DIR$/audio_recording.wav" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
