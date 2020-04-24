@@ -69,6 +69,8 @@ class App(QWidget):
         self.grid_layout.addWidget(self.w4, 1, 1)
         self.grid_layout.addWidget(self.w5, 1, 1)
         self.grid_layout.addWidget(self.w6, 1, 1)
+        self.grid_layout.addWidget(self.w7, 1, 1)
+
 
         self.w1.hide()
         self.w2.hide()
