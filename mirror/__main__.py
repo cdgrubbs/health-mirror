@@ -10,6 +10,7 @@ from PyQt5.QtCore import Qt, QTimer
 from mirror.widgets.clock import Clock
 from mirror.widgets.weather.weather import WeatherGUI
 from mirror.widgets.simple_widget import SimpleWidget
+from mirror.widgets.breathing.breathing import Breathing
 
 
 class App(QWidget):
@@ -44,6 +45,7 @@ class App(QWidget):
         # grid_layout.addWidget(SimpleWidget(self,'Qt.gray'), 2, 2)
         grid_layout.addWidget(Clock(self), 0, 0)
         grid_layout.addWidget(WeatherGUI(self), 0, 1)
+        grid_layout.addWidget(Breathing(self), 1, 0)
         #grid_layout.addWidget(Listener(self), 1, 1)
 
         self.setLayout(grid_layout)
