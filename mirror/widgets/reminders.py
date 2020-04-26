@@ -14,7 +14,8 @@ class Reminders(QWidget):
         super(Reminders, self).__init__()
         self.wordLabel = QLabel(self)
         self.wordLabel.setStyleSheet('font-size: 18pt; color: white;')
-        self.wordLabel.setGeometry(50, 50, 700, 400)
+        self.wordLabel.setGeometry(0, 0, 1000, 1000)
+
 
         reminderTimer.timeout.connect(self.doReminders)
         reminderTimer.start(5000)
@@ -51,7 +52,9 @@ class Reminders(QWidget):
         self.wordLabel.setText("Medication Reminder Set")
 
     def show(self):
+        self.resize(1000,1000)
+        self.setVisible(True)
         self.wordLabel.show()
-    
+
     def hide(self):
         self.wordLabel.hide()

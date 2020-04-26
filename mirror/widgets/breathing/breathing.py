@@ -24,40 +24,63 @@ class Breathing(QWidget):
 
         self.background = QLabel()
         self.background.setParent(self)
-        self.background.setPixmap(QPixmap(self.image_path).scaled(self.width, self.height))
+        backgroundImage = os.path.join(os.path.dirname(os.path.realpath(__file__)), "icons/beach.jpg")
+        print(backgroundImage)
+        self.background.setPixmap(QPixmap(backgroundImage).scaled(self.width, self.height))
         self.background.setScaledContents(True)
 
         self.start = 0
-        self.label = QLabel("Breath")
-        self.label.setParent(self)
-        self.label.move(QPoint(0 + 175, 450))
-        self.label.setStyleSheet('color: white; font-size: 100px')
+        self.labelDirection = QLabel("Breathing")
+        self.labelDirection.setParent(self)
+        # self.label.move(QPoint(0 + 175, 450))
+        self.labelDirection.move(0, 450)
+        self.labelDirection.setStyleSheet('color: white; font-size: 75px')
 
+        # self.labelCounter = QLabel()
+        # self.labelCounter.setParent(self)
+        # self.label.move(QPoint(0 + 175, 450))
+        # self.labelCounter.move(600, 600)
+        # self.labelCounter.setStyleSheet('color: white; font-size: 75px')
+        self.breathin = 0
         breathingtimer.timeout.connect(self.breath)
 
     def do_breathing(self):
         self.show()
-        self.counter = 13
-        breathingtimer.start(1000)
+        self.counter = 30
+        breathingtimer.start(1500)
 
     def breath(self):
+
         if self.counter > 0:
             if (self.start > 0):
-                self.label.setText(str(self.start))
+                # self.labelCounter.show()
+                self.labelDirection.setText(str(self.start))
                 self.start -= 1
             else:
                 self.start = 3
-                self.label.setText("Breath")
+                # self.labelCounter.hide()
+                if (self.breathin == 0):
+                    self.labelDirection.setText("inhale")
+                    self.breathin = 1
+                else:
+                    self.labelDirection.setText("exhale")
+                    self.breathin = 0
             self.counter -= 1
         else:
-            self.hide()
             breathingtimer.stop()
+            self.labelDirection.setText("Nice Job")
+            self.hide()
+            self.labelDirection.setText("Breathing")
+
 
     def hide(self):
         self.background.hide()
-        self.label.hide()
-
+        self.labelDirection.hide()
+        #self.labelCounter.hide()
+        breathingtimer.stop()
 
     def show(self):
+        self.resize(1000, 1000)
+        self.setVisible(True)
         self.background.show()
-        self.label.show()
+        self.labelDirection.show()

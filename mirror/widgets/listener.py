@@ -35,7 +35,10 @@ TELL_JOKE = [
 BREATHING = [
     "help me breathe",
     "give me a breathing exercise",
-    "take me through some breathing exercises"
+    "take me through some breathing exercises",
+    "breathing",
+    "breathe",
+    "breathing exercise"
 ]
 
 MEDICATION = [
@@ -44,7 +47,7 @@ MEDICATION = [
 
 LIGHTS_ON = [
     "turn the lights on",
-    "turn the lights up"
+    "turn the lights up",
     "lights on"
 ]
 
@@ -83,9 +86,9 @@ REMINDER = [
     "medication reminder"
 ]
 
-AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
-AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
-# AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), WAVE_OUTPUT_FILENAME)
+#AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
+#AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
+AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), WAVE_OUTPUT_FILENAME)
 
 def record_audio():
     p = pyaudio.PyAudio()
@@ -104,7 +107,7 @@ def record_audio():
     stream.close()
     p.terminate()
 
-    OUTPUT_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
+    OUTPUT_FILE = path.join(path.dirname(path.realpath(__file__)), WAVE_OUTPUT_FILENAME)
     wf = wave.open(OUTPUT_FILE, 'wb')
     wf.setnchannels(CHANNELS)
     wf.setsampwidth(p.get_sample_size(FORMAT))
@@ -115,7 +118,6 @@ def record_audio():
 def record_and_parse_audio():
     while True:
         record_audio()
-
         r = sr.Recognizer()
         with sr.AudioFile(AUDIO_FILE) as source:
             audio = r.record(source)
@@ -144,7 +146,7 @@ class Listener(QWidget):
 
     def doListener(self):
         record_audio()
-        time.sleep(5)
+        # time.sleep(3)
         return self.get_results()
 
     def get_results(self):
@@ -191,11 +193,11 @@ class Listener(QWidget):
         for utterance in JOURNAL:
             if utterance.lower() == wordString.lower():
                 widgetName = 'journal'
-            
+
         for utterance in READ_JOURNAL:
             if utterance.lower() == wordString.lower():
                 widgetName = 'read_journal'
-        
+
         for utterance in REFLECTION:
             if utterance.lower() == wordString.lower():
                 widgetName = 'reflection'
@@ -203,7 +205,8 @@ class Listener(QWidget):
         for utterance in REMINDER:
             if utterance.lower() == wordString.lower():
                 widgetName = 'reminder'
-
+        if wordString.lower() == "clear":
+            widgetName = 'clear'
         return widgetName
 
     def hide(self):

@@ -8,7 +8,7 @@ class Reflection(QWidget):
         self.wordLabel = QLabel(self)
         self.wordLabel.setStyleSheet('font-size: 18pt; color: white;')
         self.wordLabel.setGeometry(50, 50, 700, 100)
-    
+
     def doReflection(self):
         self.counter = 0
         self.timer = QTimer(self)
@@ -25,7 +25,9 @@ class Reflection(QWidget):
         self.counter += 0.3
 
     def show(self):
+        self.resize(1000,1000)
+        self.setVisible(True)
         self.wordLabel.show()
-    
+
     def hide(self):
         self.wordLabel.hide()
