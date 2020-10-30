@@ -86,8 +86,6 @@ REMINDER = [
     "medication reminder"
 ]
 
-#AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../output.wav")
-#AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), "../../audio_recording.wav")
 AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), WAVE_OUTPUT_FILENAME)
 
 def record_audio():

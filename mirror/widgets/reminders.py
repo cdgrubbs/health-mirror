@@ -21,18 +21,21 @@ class Reminders(QWidget):
         reminderTimer.start(5000)
 
     def doReminders(self):
+        # Gets current date
         time = datetime.now()
         dayOfWeek = time.strftime("%A")
         hour = time.strftime("%-H")
         output = ""
         if (dayOfWeek == "Friday"):
             output += "Remember to go outside today\n"
+        # Reminds user to take their medicine
         for medication, hour_med in self.reminders:
             if (str(hour_med) == str(hour)):
                 output += "Reminder to take " + medication + "\n"
         self.wordLabel.setText(output)
 
     def setReminder(self):
+        # Has users set their medication and when they need to take it
         question = "What is your medication?"
         self.wordLabel.setText(question)
         self.wordLabel.repaint()

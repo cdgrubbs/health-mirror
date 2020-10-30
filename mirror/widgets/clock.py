@@ -12,6 +12,7 @@ class Clock(QWidget):
         self.setParent(parent)
         self.time = datetime.now()
 
+        # Gets the current time from the OS
         current_time = self.time.strftime("%I:%M %p")
         if current_time[0] == "0":
             current_time = current_time[1:]
@@ -21,10 +22,12 @@ class Clock(QWidget):
         self.label.setStyleSheet('color: white; font-size: 100px')
 
         clocktimer.timeout.connect(self.update_time)
+        # Starts the timer to check for a new time
         clocktimer.start(1000)
 
     def update_time(self):
         new_time = datetime.now()
+        # If time has changed then update
         if new_time.strftime("%I:%M %p") != self.time.strftime("%I:%M %p"):
             self.time = new_time
 

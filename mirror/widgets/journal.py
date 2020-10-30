@@ -12,6 +12,7 @@ class Journal(QWidget):
         self.wordLabel.setGeometry(50, 50, 1000, 1000)
 
     def doJournal(self):
+        # Asks user for what they are grateful for and logs it
         numbers = ["one", "another", "a third"]
         for number in numbers:
             question = ("What is {} thing you are grateful for today?".format(number))
@@ -20,6 +21,7 @@ class Journal(QWidget):
             word_string = record_and_parse_audio()
             self.journal_entries.append(word_string)
 
+        # Reads back what the user was grateful for
         output = "Today, you are grateful for:\n"
         output += "1) " + self.journal_entries[-3] + "\n"
         output += "2) " + self.journal_entries[-2] + "\n"
@@ -27,6 +29,7 @@ class Journal(QWidget):
         self.wordLabel.setText(output)
 
     def readEntries(self):
+        # Reads back what the user was grateful for
         if (len(self.journal_entries) < 3):
             return
 

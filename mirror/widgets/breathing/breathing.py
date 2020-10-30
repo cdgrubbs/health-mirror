@@ -22,6 +22,7 @@ class Breathing(QWidget):
         self.width = self.frameGeometry().width()
         self.height = self.frameGeometry().height()
 
+        # Display the breathing picture
         self.background = QLabel()
         self.background.setParent(self)
         backgroundImage = os.path.join(os.path.dirname(os.path.realpath(__file__)), "icons/beach.jpg")
@@ -32,41 +33,38 @@ class Breathing(QWidget):
         self.start = 0
         self.labelDirection = QLabel("Breathing")
         self.labelDirection.setParent(self)
-        # self.label.move(QPoint(0 + 175, 450))
         self.labelDirection.move(0, 450)
         self.labelDirection.setStyleSheet('color: white; font-size: 75px')
 
-        # self.labelCounter = QLabel()
-        # self.labelCounter.setParent(self)
-        # self.label.move(QPoint(0 + 175, 450))
-        # self.labelCounter.move(600, 600)
-        # self.labelCounter.setStyleSheet('color: white; font-size: 75px')
         self.breathin = 0
         breathingtimer.timeout.connect(self.breath)
 
+    # Starts the breathing widget
     def do_breathing(self):
         self.show()
         self.counter = 30
+        # Starts the timer
         breathingtimer.start(1500)
 
     def breath(self):
-
+        
         if self.counter > 0:
             if (self.start > 0):
-                # self.labelCounter.show()
                 self.labelDirection.setText(str(self.start))
                 self.start -= 1
             else:
                 self.start = 3
-                # self.labelCounter.hide()
                 if (self.breathin == 0):
+                    # Tells user to inhale
                     self.labelDirection.setText("inhale")
                     self.breathin = 1
                 else:
+                    # Tells user to exhale
                     self.labelDirection.setText("exhale")
                     self.breathin = 0
             self.counter -= 1
         else:
+            # Ending breathing widget
             breathingtimer.stop()
             self.labelDirection.setText("Nice Job")
             self.hide()
@@ -76,7 +74,6 @@ class Breathing(QWidget):
     def hide(self):
         self.background.hide()
         self.labelDirection.hide()
-        #self.labelCounter.hide()
         breathingtimer.stop()
 
     def show(self):
