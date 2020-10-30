@@ -62,6 +62,7 @@ class App(QWidget):
         self.showFullScreen()
 
     def createLayout(self):
+        # Adds the widgets to the layout
         self.grid_layout.addWidget(Clock(self), 0, 0)
         self.grid_layout.addWidget(WeatherGUI(self), 0, 2)
 
@@ -73,15 +74,6 @@ class App(QWidget):
         self.grid_layout.addWidget(self.w6, 1, 1)
         self.grid_layout.addWidget(self.w7, 2, 1)
         self.grid_layout.addWidget(self.w8, 2, 1)
-
-        #self.w3.move(self.fullWidth / 2 - 500, self.fullHeight / 2 - 500)
-        #self.w4.move(self.fullWidth / 2 - 500, self.fullHeight / 2 - 500)
-        #self.w5.move(self.fullWidth / 2 - 100, self.fullHeight - 400)
-        #self.w6.move(self.fullWidth / 2 - 500, self.fullHeight / 2 - 500)
-        #self.w7.move(self.fullWidth / 2 - 100, self.fullHeight - 400)
-        #self.w8.move(400, 400)
-
-        # self.grid_layout.setRowStretch(1, 0.3)
 
         self.hideAll()
 
@@ -151,6 +143,7 @@ class App(QWidget):
         print(self.frameSize())
         print(self.width(), self.height())
 
+    # Hides all the widgets
     def hideAll(self):
         self.w1.hide()
         self.w2.hide()
