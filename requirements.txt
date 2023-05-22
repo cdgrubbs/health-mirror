@@ -1,5 +1,5 @@
 pyqt5==5.14.1
-requests==2.23.0
+requests==2.31.0
 SpeechRecognition==3.8.1
 PyAudio==0.2.11
 pycountry==19.8.18
